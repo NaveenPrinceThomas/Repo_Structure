@@ -1,0 +1,38 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - # Add your installation commands here
+
+  pre_build:
+    commands:
+      - # Add any pre-build commands here
+
+  build:
+    commands:
+      - |
+        # Check for changes in A
+        if git diff --quiet HEAD^ HEAD -- A; then
+          echo "No changes detected in A"
+        else
+          echo "Changes detected in A"
+        fi
+
+        # Check for changes in B
+        if git diff --quiet HEAD^ HEAD -- B; then
+          echo "No changes detected in B"
+        else
+          echo "Changes detected in B"
+        fi
+
+        # Check for changes in C
+        if git diff --quiet HEAD^ HEAD -- C; then
+          echo "No changes detected in C"
+        else
+          echo "Changes detected in C"
+        fi
+        
+  post_build:
+    commands:
+      - # Add any post-build commands here
