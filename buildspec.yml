@@ -12,25 +12,24 @@ phases:
   build:
     commands:
       - |
-        # Check for changes in A
-        if git diff --quiet HEAD^ HEAD -- A; then
-          echo "No changes detected in A"
+        # Check for changes in First
+        if git diff --quiet HEAD^ HEAD -- First; then
+          echo "No changes detected in First"
         else
-          echo "Changes detected in A"
+          echo "Changes detected in First"
+          cd $CODEBUILD_SRC_DIR
+          zip -j hello-python.zip First/*
+          aws s3 cp hello-python.zip s3://npj-terraform-state/
         fi
 
-        # Check for changes in B
-        if git diff --quiet HEAD^ HEAD -- B; then
-          echo "No changes detected in B"
+        # Check for changes in Second
+        if git diff --quiet HEAD^ HEAD -- Second; then
+          echo "No changes detected in Second"
         else
-          echo "Changes detected in B"
-        fi
-
-        # Check for changes in C
-        if git diff --quiet HEAD^ HEAD -- C; then
-          echo "No changes detected in C"
-        else
-          echo "Changes detected in C"
+          echo "Changes detected in Second"
+          cd $CODEBUILD_SRC_DIR
+          zip -j hi-python.zip Second/*
+          aws s3 cp hi-python.zip s3://npj-terraform-state/
         fi
         
   post_build:
